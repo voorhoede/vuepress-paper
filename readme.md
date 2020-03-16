@@ -66,8 +66,8 @@ Unit tests are present in each file matching the implementation filename ending 
 #### Style
 The code is written in a functional style using [Sanctuary](https://sanctuary.js.org/) to provide simple, pure functions with no need for `null` checks.
 
-[travis]: https://travis-ci.org/voorhoede/vuepress-paper/branches
-[travis-icon]: https://img.shields.io/travis/voorhoede/vuepress-paper/master.svg?style=flat-square
+[travis]: https://travis-ci.com/voorhoede/vuepress-paper/branches
+[travis-icon]: https://img.shields.io/travis/com/voorhoede/vuepress-paper/master.svg?style=flat-square
 [lgtm]: https://lgtm.com/projects/g/voorhoede/vuepress-paper/
 [lgtm-icon]: https://img.shields.io/lgtm/grade/javascript/g/voorhoede/vuepress-paper.svg?style=flat-square
 [depfu]: https://depfu.com/repos/github/voorhoede/vuepress-paper/
