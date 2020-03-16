@@ -1,6 +1,1 @@
-dist
-docs/*
-!docs/.vuepress
-!docs/readme.md
-.env
 node_modules

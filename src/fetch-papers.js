@@ -1,7 +1,6 @@
 'use strict';
 
 const { kebabCaseIt } = require('case-it');
-const dotenv = require('dotenv-safe');
 const { mkdir, writeFile } = require('fs').promises;
 const got = require('got');
 const path = require('path');
@@ -20,8 +19,6 @@ const {
 } = require('sanctuary');
 
 const main = require('./main.js');
-
-dotenv.config();
 
 const dropboxPaperApi = got.extend({
   method: 'POST',
