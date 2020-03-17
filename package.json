@@ -2,7 +2,7 @@
   "name": "vuepress-paper",
   "description": "Fetch and transform content from Dropbox Paper for Vuepress.",
   "version": "1.0.0",
-  "main": "src/main.js",
+  "main": "src/vuepress-plugin.js",
   "files": [
     "src/*.js",
     "!src/*.test.js",
@@ -16,6 +16,7 @@
     "lint": "eslint ./src/*.js"
   },
   "dependencies": {
+    "@vuepress/plugin-register-components": "^1.3.1",
     "case-it": "^1.0.1",
     "got": "^9.6.0",
     "markdown-it-for-inline": "^0.1.1",

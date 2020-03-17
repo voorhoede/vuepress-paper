@@ -14,9 +14,7 @@ const {
   match,
 } = require('sanctuary');
 
-const documentsMetaData = require('../../../docs/meta-tree.json');
-
-const getDropboxDocumentLocation = pipe([
+const getDropboxDocumentLocation = documentsMetaData => pipe([
   match(/paper\.dropbox\.com\/doc\/.+--\S{26}-(\w{21})/),
   chain(match => match.groups[0]),
   chain(urlId => find (doc => doc.id === urlId) (documentsMetaData)),
@@ -24,12 +22,12 @@ const getDropboxDocumentLocation = pipe([
 ]);
 
 
-const transformMarkdown = markdown => {
+const transformMarkdown = documentsMetaData => markdown => {
   markdown.use(markdownItForInline, 'internal-link', 'link_open', (tokens, index) => {
     const token = tokens[index];
 
     pipe([
-      getDropboxDocumentLocation,
+      getDropboxDocumentLocation(documentsMetaData),
       map(location => {
         token.attrSet(
           'href',
