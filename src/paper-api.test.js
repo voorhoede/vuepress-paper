@@ -5,7 +5,7 @@ const { Nothing, isJust } = require('sanctuary');
 const {
   isPermissionError,
   foldersToPath,
-} = require('./main.js')();
+} = require('./paper-api.js')();
 
 test('isPermissionError', t => {
   t.is(isPermissionError({}), Nothing);
