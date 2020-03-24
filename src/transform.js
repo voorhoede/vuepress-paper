@@ -76,6 +76,4 @@ const transformMarkdown = documentsMetaData => markdown => {
 };
 
 
-module.exports = {
-  transformMarkdown,
-};
+module.exports = transformMarkdown;

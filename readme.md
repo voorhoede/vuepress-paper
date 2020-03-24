@@ -3,48 +3,56 @@
 [![LGTM Grade][lgtm-icon]][lgtm]
 [![Depfu Status][depfu-icon]][depfu]
 
-**This project is a proof of concept**, it is a quick split of [the playbook](https://github.com/voorhoede/playbook/), check out the [playbook before the split](https://github.com/voorhoede/playbook/tree/e516faab25f6dd13976b9005973c29b74ce33a1d) for more information. In the future this will probably evolve into either a Vuepress plugin or command line tool. For now this module is installed from GitHub and requires some extra setup:
-```sh
-npm install git://github.com/voorhoede/vuepress-paper.git
-npm install @vuepress/plugin-register-components
-env DROPBOX_API_TOKEN=EXMAPLEaePpvhsJ6LopZIZZw
-env DROPBOX_PAPER_DIRECTORY_ID=e.1gg8YzoPiut8example
-```
+Node.js package to fetch content from [Dropbox Paper](https://paper.dropbox.com/), generate a sidebar and enhance the markdown for [Vuepress](vuepress.vuejs.org/).
 
-Fetch content:
-```sh
-node ./node_modules/vuepress-paper/src/fetch-papers.js
-```
+## Usage
+`npm install vuepress-paper --save-dev`
 
-Vuepress config:
+### Configuration
+Generally using Vuepress Paper will take place in Vuepress configuration, for example using all three functionalities:
 ```js
-const vuepressPaperPath = require.resolve('vuepress-paper');
+const { fetchPapers, generateSidebar, paperPlugin } = require('vuepress-paper');
 
-const generateSidebar = require(`${vuepressPaperPath}/../generate-sidebar.js`);
-const { transformMarkdown } = require(`${vuepressPaperPath}/../transform.js`);
-
-modules.exports = {
-  themeConfig: {
-    sidebar: generateSidebar(documentsMetaData),
-  },
-  extendMarkdown: transformMarkdown,
-  plugins: [
-    [
-      '@vuepress/plugin-register-components',
-      {
-        components: [
-          {
-            name: 'youtube-embed',
-            path: path.resolve(
-              `${vuepressPaperPath}/../youtube-embed.vue`
-            ),
-          }
-        ]
-      }
+module.exports = () => fetchPapers({
+  apiToken: process.env.DROPBOX_API_TOKEN,
+  directoryId: process.env.DROPBOX_PAPER_DIRECTORY_ID,
+})
+  .then((documentsMetaData) => ({
+    themeConfig: {
+      sidebar: generateSidebar(documentsMetaData),
+    },
+    plugins: [
+      [ paperPlugin, { documentsMetaData } ]
     ],
-  ],
-}
+  }));
 ```
+
+## API
+### fetchPapers({ apiToken, directoryId })
+
+#### apiToken
+Type: `String`
+
+The Dropbox API access token generated from the [Dropbox App Console](https://www.dropbox.com/developers/apps).
+
+#### directoryId
+Type: `Boolean`
+
+The directory to fetch content from, the ID is present at the end of a directory URL in Dropbox Paper. For example the `Playbook` directory URL ends with:
+`Playbook-e.1gg8Yut8`. Where `e.1gg8Yut8` is the ID.
+
+### generateSidebar(documentsMetaData)
+
+#### documentsMetaData
+Type: `Array`
+
+Information about each document that is fetched from Dropbox Paper, used to create a tree based on their location.
+
+### paperPlugin({ documentsMetaData })
+#### documentsMetaData
+Type: `Array`
+
+Information about each document that is fetched from Dropbox Paper, used rewrite links that point to other generated documents.
 
 ## Development
 
@@ -57,8 +65,6 @@ npm ci
 ```
 
 ### Codebase overview
-#### Structure
-Because Vuepress does not support asynchronous configuration the content fetching and building the website is seperated. Which means the needed sidebar data is written to a temporary file so it can be synchronously read from the vuepress config.
 
 #### Testing
 Unit tests are present in each file matching the implementation filename ending with `.test.js` and are ran with: `npm test`.
