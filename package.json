@@ -12,7 +12,6 @@
     "test": "ava ./src/*.test.js",
     "test:ci": "npm run test && npm run lint -- --max-warnings 0",
     "test:watch": "npm run test -- --watch",
-    "docs:content": "node ./src/fetch-papers.js",
     "lint": "eslint ./src/*.js"
   },
   "dependencies": {
