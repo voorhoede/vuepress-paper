@@ -22,8 +22,8 @@ const paperApi = require('./paper-api.js');
 
 const dropboxPaperApi = apiToken => got.extend({
   method: 'POST',
-  baseUrl: 'https://api.dropbox.com/2/paper/',
-  json: true,
+  prefixUrl: 'https://api.dropbox.com/2/paper/',
+  responseType: 'json',
   headers: {
     Authorization: `Bearer ${apiToken}`,
   },
