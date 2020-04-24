@@ -30,34 +30,34 @@ const fetchPaginatedDocIds = apiFetch => previousDocIds => ({
   body: { doc_ids: docIds, cursor, has_more: hasMore },
 }) =>
   hasMore
-    ? apiFetch('/docs/list/continue', {
-      body: { cursor },
+    ? apiFetch('docs/list/continue', {
+      json: { cursor },
     })
       .then(fetchPaginatedDocIds (apiFetch) (previousDocIds.concat(docIds)))
     : previousDocIds.concat(docIds);
 
-const fetchAllDocIds = apiFetch => () => apiFetch('/docs/list', {})
+const fetchAllDocIds = apiFetch => () => apiFetch('docs/list', {})
   .then(fetchPaginatedDocIds (apiFetch) ([]));
 
-const fetchDocFolders = apiFetch => docId => apiFetch(
-  '/docs/get_folder_info',
-  { body: { doc_id: docId } }
+const fetchDocFolders = apiFetch => docId => apiFetch.post(
+  'docs/get_folder_info',
+  { json: { doc_id: docId } }
 )
   .then(gets (Boolean) (['body', 'folders']))
-  .catch(response =>
-    isPermissionError(response) === Nothing
-      ? Promise.reject(response)
+  .catch(httpError =>
+    isPermissionError(httpError.response) === Nothing
+      ? Promise.reject(httpError.response.body)
       : Promise.resolve(Nothing)
   );
 
 const fetchDocContent = apiFetch => docId => apiFetch(
-  '/docs/download',
+  'docs/download',
   {
     headers: { 'Dropbox-API-Arg': JSON.stringify({
       doc_id: docId,
       export_format: 'markdown',
     })},
-    json: false,
+    responseType: 'text',
   }
 )
   .then(({ body, headers: { 'dropbox-api-result': metaData }}) => ({
@@ -66,12 +66,12 @@ const fetchDocContent = apiFetch => docId => apiFetch(
   }));
 
 const fetchDocMetaData = apiFetch => docId => apiFetch(
-  '/docs/get_metadata',
-  { body: { doc_id: docId } }
+  'docs/get_metadata',
+  { json: { doc_id: docId } }
 )
   .then(({ body }) => body);
 
-module.exports = apiFetch => ({
+module.exports = (apiFetch) => ({
   isPermissionError,
   foldersToPath,
   fetchAllDocIds: fetchAllDocIds(apiFetch),
