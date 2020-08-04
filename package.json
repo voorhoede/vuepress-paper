@@ -17,7 +17,7 @@
   "dependencies": {
     "@vuepress/plugin-register-components": "^1.5.2",
     "case-it": "^1.0.1",
-    "got": "^11.5.0",
+    "got": "^11.5.1",
     "markdown-it-for-inline": "^0.1.1",
     "promise-all-props": "^1.0.1",
     "sanctuary": "^3.0.0"
