@@ -23,7 +23,7 @@
     "sanctuary": "^3.0.0"
   },
   "devDependencies": {
-    "ava": "^3.10.1",
+    "ava": "^3.11.1",
     "eslint": "^7.5.0"
   },
   "engines": {
