@@ -1,7 +1,7 @@
 {
   "name": "vuepress-paper",
   "description": "Fetch and transform content from Dropbox Paper for Vuepress.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/main.js",
   "files": [
     "src/*.js",
