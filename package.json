@@ -17,14 +17,14 @@
   "dependencies": {
     "@vuepress/plugin-register-components": "^1.5.4",
     "case-it": "^1.0.1",
-    "got": "^11.5.2",
+    "got": "^11.6.1",
     "markdown-it-for-inline": "^0.1.1",
     "promise-all-props": "^1.0.1",
     "sanctuary": "^3.1.0"
   },
   "devDependencies": {
     "ava": "^3.12.1",
-    "eslint": "^7.7.0"
+    "eslint": "^7.8.1"
   },
   "engines": {
     "node": ">= 12"
